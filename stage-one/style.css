@@ -1,0 +1,48 @@
+*,
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+body{
+    background-color: black;
+    color: white;
+}
+.main {
+	width: 100vw;
+	height: max-content;
+    
+}
+
+.img-cont{
+    width: 25%;
+    min-width: 300px;
+    /* aspect-ratio: 1/1; */
+    margin: auto;
+    margin-top: 50px;
+}
+.img{
+    width: 100%;
+    height: 100%;
+    border-radius: 250px 250px 250px 0px;
+}
+.name-cont, .day-cont, .time-cont, .track-cont, .url-cont{
+    width: fit-content;
+    margin: auto;
+    margin-top: 50px;
+}
+.name{
+    font-size: 30px;
+    width: fit-content;
+}
+.day{
+    font-size: 30px;
+}
+.time{
+
+}
+.track{
+    font-size: 30px;
+}
+
+
