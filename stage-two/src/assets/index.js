@@ -1,0 +1,7 @@
+// export {ReactComponent as Imdb} from './imdb.svg'
+export {ReactComponent as Logo} from './logoImg.svg'
+export {ReactComponent as MenuIcon} from './menuIcon.svg'
+export {ReactComponent as PlayIcon} from './playIcon.svg'
+export {ReactComponent as RottenTomatoes} from './rottenTomatoes.svg'
+export {ReactComponent as Search} from './search.svg'
+export {ReactComponent as Imdb} from './imdb.svg'
