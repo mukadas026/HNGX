@@ -22,7 +22,7 @@ const MovieBanner = ({ movie }) => {
 	return (
 		<div
 			key={id}
-			className='absolute top-0 left-0 w-full h-full bg-red-500 text-white'
+			className='absolute text-sm top-0 left-0 w-full h-full bg-red-500 text-white'
 		>
 			<img
 				src={`${deviceWidth > 500 ? imageBase : imageBaseCard}${poster_path}`}

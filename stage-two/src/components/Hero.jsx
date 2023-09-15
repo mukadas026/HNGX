@@ -31,7 +31,7 @@ const Hero = () => {
 						<Fragment key={movie.id}>
 							<MovieBanner movie={movie} />
 						</Fragment>
-					))}
+					))[0]}
 				</div>
 			)}
 		</div>

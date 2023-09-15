@@ -9,7 +9,7 @@ import { Link } from "react-router-dom"
 // import {default as Imdb} from '../assets/imdb.svg'
 
 const Navbar = () => {
-	const {openModal, setOpenModal} = useContext(Context)
+	const {openModal, setOpenModal, scrollHeight} = useContext(Context)
 
 	const handleFormClick = () => {
 		console.log("form")
@@ -20,7 +20,7 @@ const Navbar = () => {
 	}
 	// console.log(store)
 	return (
-		<nav className='sticky z-10 top-0 w-full flex py-4 px-4 items-center gap-x-4 md:justify-between md:px-10'>
+		<nav className={`${scrollHeight > 400 && 'bg-site-red/80'} transition-colors sticky z-10 top-0 w-full flex py-4 px-4 items-center gap-x-4 md:justify-between md:px-10 `}>
 			{openModal && <SearchModal />}
 			<Link to='/' className='flex items-center justify-center gap-x-2'>
 				<Logo className='w-16' />
