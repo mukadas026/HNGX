@@ -7,6 +7,7 @@ import ImageContainer from "../components/ImageContainer"
 import { client } from "../utils/axios"
 import { Context } from "../context/AppContext"
 import { useNavigate } from "react-router-dom"
+import { Dna } from "react-loader-spinner"
 // import { createClient } from "pexels"
 
 const Home = () => {
@@ -15,14 +16,14 @@ const Home = () => {
 	const [search, setSearch] = useState("random")
 
 	const navigate = useNavigate()
-    const {user} = useContext(Context)
-    // console.log(user)
-    if (!user){
-        navigate('/signin')
-    }
+	const { user } = useContext(Context)
+	// console.log(user)
+	if (!user) {
+		navigate("/signin")
+	}
 	// const pexelsClient = createClient(import.meta.env.VITE_API)
-  const searchImages = () => {
-    setIsloading(true)
+	const searchImages = () => {
+		setIsloading(true)
 		// const images = pexelsClient.photos
 		try {
 			client
@@ -38,15 +39,25 @@ const Home = () => {
 		} catch (err) {
 			console.log(err)
 		}
-  }
+	}
 	useEffect(() => {
 		searchImages()
 	}, [])
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<main className=' w-screen max-w-[1920px] mx-auto '>
-				<Navbar search={search} setSearch={setSearch} searchImages={searchImages}/>
-				{isLoading ? <div>Loading</div> : <ImageContainer images={images} />}
+				<Navbar
+					search={search}
+					setSearch={setSearch}
+					searchImages={searchImages}
+				/>
+				{isLoading ? (
+					<div className='w-full h-screen max-h-[1080px] flex item-center justify-center'>
+						<Dna />
+					</div>
+				) : (
+					<ImageContainer images={images} />
+				)}
 			</main>
 		</DndProvider>
 	)
