@@ -43,7 +43,7 @@ const Home = () => {
 	}
 	useEffect(() => {
 		searchImages()
-	}, [])
+	}, [search])
 	return (
 		// <DndProvider backend={HTML5Backend}>
 		<main className=' w-screen max-w-[1920px] mx-auto '>

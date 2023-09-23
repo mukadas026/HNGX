@@ -10,18 +10,23 @@ export default function SignIn() {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const { setUser } = useContext(Context)
-const navigate = useNavigate()
+	const navigate = useNavigate()
 	const handleSignin = () => {
-		signInWithEmailAndPassword(auth, email, password).then((userCred) => {
-			console.log("signed in")
-			setUser(userCred.user)
-            navigate('/')
-		})
-        .catch(err => {
-            console.log(err)
-        })
+		signInWithEmailAndPassword(auth, email, password)
+			.then((userCred) => {
+				console.log("signed in")
+				setUser(userCred.user)
+				navigate("/")
+			})
+			.catch((err) => {
+				console.log(err)
+			})
 	}
-
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter") {
+			handleSignin()
+		}
+	}
 	return (
 		<>
 			{/*
@@ -46,7 +51,7 @@ const navigate = useNavigate()
 
 				<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
 					<div
-                    // method="post"
+						// method="post"
 						className='space-y-6'
 						// onSubmit={handleSignin}
 					>
@@ -65,6 +70,7 @@ const navigate = useNavigate()
 									autoComplete='email'
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
+									onKeyDown={handleKeyDown}
 									required
 									className='block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
 								/>
@@ -96,6 +102,7 @@ const navigate = useNavigate()
 									autoComplete='current-password'
 									required
 									value={password}
+									onKeyDown={handleKeyDown}
 									onChange={(e) => setPassword(e.target.value)}
 									className='block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6'
 								/>
@@ -104,7 +111,7 @@ const navigate = useNavigate()
 
 						<div>
 							<button
-                            onClick={handleSignin}
+								onClick={handleSignin}
 								// type='submit'
 								className='flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500'
 							>
@@ -112,9 +119,14 @@ const navigate = useNavigate()
 							</button>
 						</div>
 					</div>
-					<div className="text-white mt-8 flex flex-wrap gap-x-2">
+					<div className='text-white mt-8 flex flex-wrap gap-x-2'>
 						<p>Don't have an account?</p>
-						<button className="text-blue-500" onClick={() => navigate("/signup")}>Sign Up</button>
+						<button
+							className='text-blue-500'
+							onClick={() => navigate("/signup")}
+						>
+							Sign Up
+						</button>
 					</div>
 				</div>
 			</div>
