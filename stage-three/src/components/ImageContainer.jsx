@@ -1,128 +1,78 @@
 import React, { useCallback, useEffect, useRef } from "react"
-import update from "immutability-helper"
+// import update from "immutability-helper"
 
-import { motion } from "framer-motion"
+// import { motion } from "framer-motion"
 import { Fragment, useState } from "react"
-import { useDrag, useDrop } from "react-dnd"
+// import { useDrag, useDrop } from "react-dnd"
 import Image from "./Image"
+// import {useDroppable} from '@dnd-kit/core';
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
+import { arrayMove, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
-const files = [
-	{
-		id: 0,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 1,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 2,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 3,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 4,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 5,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 6,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 7,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 8,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 9,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 10,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 11,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 12,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-	{
-		id: 13,
-		x: 0,
-		y: 0,
-		source: "https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80",
-	},
-]
-
-export const ImageType = {
-	img: "image",
-}
-
-const ImageContainer = ({ images }) => {
-	const containerRef = useRef(null)
+const ImageContainer = ({ images, setImages }) => {
+	// const containerRef = useRef(null)
+	// const {setNodeRef, } = useDroppable({id: 'containerRef'})
 	// const [images, setImages] = useState(images)
 
 	useEffect(() => {}, [])
+	const sensors = useSensors(
+		useSensor(PointerSensor),
+		useSensor(KeyboardSensor, {
+			coordinateGetter: sortableKeyboardCoordinates,
+		})
+	)
+
+	const handleDragEnd = (event) => {
+		const { active, over } = event
+		console.log(images)
+		if (active.id !== over.id) {
+			setImages((prev) => {
+				// const oldIndex = prev.indexOf(active.id)
+				let oldIndex = 0
+				let newIndex = 0
+				prev.forEach((item,i) => {
+					if (item.id === active.id){
+						oldIndex = i
+					}
+					if(item.id === over.id){
+						newIndex = i
+					}
+				})
+				// const newIndex = prev.indexOf(over.id)
+				console.log(oldIndex, newIndex)
+
+				return arrayMove(prev, oldIndex, newIndex)
+			})
+		}
+	}
 
 	return (
-		<div
-			// ref={drop}
-			ref={containerRef}
-			className='relative pt-16 w-full flex flex-wrap gap-x-4 gap-y-8 items-center justify-center'
+		<DndContext
+			sensors={sensors}
+			collisionDetection={closestCenter}
+			onDragEnd={handleDragEnd}
 		>
-			<>
-				{images.map((image, i) => (
-					<Fragment key={image.id}>
-						<Image
-							alt={image.alt}
-							src={image.src.portrait}
-							id={image.id}
-							parentRef={containerRef}
-							// parentRef={drop}
-						/>
-					</Fragment>
-				))}
-			</>
-		</div>
+			<div
+				// ref={drop}
+				// ref={setNodeRef}
+				className='relative pt-16 w-full h-full flex flex-wrap bg-red-500 gap-x-4 gap-y-8  justify-center'
+			>
+				<SortableContext
+					items={images}
+					strategy={rectSortingStrategy}
+				>
+					{images.map((image, i) => (
+						<Fragment key={image.id}>
+							<Image
+								image={image}
+								// parentRef={containerRef}
+								// parentRef={drop}
+							/>
+						</Fragment>
+					))}
+				</SortableContext>
+			</div>
+		</DndContext>
 	)
 }
 

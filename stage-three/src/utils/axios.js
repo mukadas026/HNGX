@@ -2,8 +2,10 @@ import axios from 'axios'
 
 
 export const client = axios.create({
-    baseURL:"https://api.pexels.com/v1/",
-    headers:{
-        Authorization: `M8W3yCuEfKmBho8lK9Vt00pRDsLRjpwH0kCsYmoP8s5Kp0XLnSadUGJr`
-    }
+    baseURL:"https://pixabay.com/api/",
+    // params:{
+        // key: `32365943-f1486da9d0648c7d76b7c7edb`,
+        // q: "cars",
+        // type:"photo"
+    // }
 }) 
